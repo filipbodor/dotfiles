@@ -1,0 +1,22 @@
+{
+  "code-runner.executorMap": {
+    "cpp": "cd \"$dir\" && g++-15 -std=c++17 \"$fileName\" -o \"$fileNameWithoutExt\" && \"./$fileNameWithoutExt\"",
+    "python": "python3 -u"
+  },
+  "files.autoSave": "onFocusChange",
+  "code-runner.runInTerminal": true,
+  "terminal.integrated.enableMultiLinePasteWarning": "auto",
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "github.copilot.chat.anthropic.thinking.enabled": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
+}

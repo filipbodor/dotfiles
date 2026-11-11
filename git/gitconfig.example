@@ -1,0 +1,12 @@
+# Shared defaults; configure identities, signing, and account routing locally.
+[user]
+    useConfigOnly = true
+[core]
+    editor = code --wait
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+[include]
+    path = ~/.gitconfig.local

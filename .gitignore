@@ -1,0 +1,17 @@
+# Allow only the reviewed files. Add new files deliberately.
+*
+!/.gitignore
+!/README.md
+!/shell/
+!/shell/.zshrc
+!/shell/.zprofile
+!/shell/.profile
+!/shell/zshrc.local.example
+!/git/
+!/git/ignore
+!/git/gitconfig.example
+!/git/gitconfig.local.example
+!/vscode/
+!/vscode/settings.json
+!/npm/
+!/npm/npmrc.example

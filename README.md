@@ -1,0 +1,92 @@
+# Dotfiles
+
+My shared macOS development preferences for Zsh, Git, and VS Code. Account
+identities, credentials, machine paths, and private overrides stay outside this
+repository.
+
+## What is included
+
+| File | Purpose |
+| --- | --- |
+| `shell/.zprofile` | Guarded Homebrew setup and local command PATH |
+| `shell/.zshrc` | Oh My Zsh, fnm, editor defaults, and `runc` |
+| `shell/.profile` | Optional POSIX environment helper |
+| `shell/zshrc.local.example` | Optional SDK paths, customized locally |
+| `git/gitconfig.example` | Shared Git defaults with a local include |
+| `git/gitconfig.local.example` | Identity placeholder |
+| `git/ignore` | Global ignore preferences |
+| `vscode/settings.json` | Editor preferences and C++/Python runner overrides |
+| `npm/npmrc.example` | Registry authentication through an environment variable |
+
+## Shell setup
+
+Review the files and back up the current configuration before copying anything.
+There is no automatic installer. These are macOS-oriented preferences; optional
+tools are loaded only when available.
+
+1. Install Homebrew and Oh My Zsh if you want to use them. The shell remains usable
+   without Oh My Zsh. The configured theme is `bureau`.
+2. Install fnm and the Node versions your projects require. Initialize fnm with
+   `fnm env --use-on-cd --shell zsh` as this configuration does. Use `fnm default
+   VERSION` to choose a fallback version. Avoid loading nvm alongside fnm; keep its
+   installation until any required global tools have been migrated.
+3. Optionally install autosuggestions in Oh My Zsh's custom plugin directory:
+
+   ```sh
+   git clone https://github.com/zsh-users/zsh-autosuggestions \
+     "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+   ```
+
+4. Copy or merge `shell/.zprofile`, `shell/.zshrc`, and `shell/.profile` into the
+   corresponding files in your home directory.
+5. Copy `shell/zshrc.local.example` to `~/.zshrc.local` if you need SDK settings.
+   The shell also supports `~/.zprofile.local` and `~/.profile.local`.
+
+`~/.local/bin` stays ahead of system tools so local command wrappers take precedence.
+The shell uses fnm for project version files. Oh My Zsh's fnm plugin supplies
+completions; the explicit `fnm env` call supplies version switching.
+`EDITOR` and `VISUAL` use `code --wait` when available, otherwise `vi`.
+
+### Running C++
+
+`runc` lives in `.zshrc` and compiles with `g++-15 -std=c++17`:
+
+```sh
+runc solution
+runc solution.cpp
+runc "solution with spaces"
+```
+
+If the current directory contains `in.txt`, it is used as standard input;
+otherwise the program reads from the terminal. Install GCC 15 or change the
+compiler in the function to match your setup. Compiler failures stop execution.
+
+## Git, editor, and npm
+
+Merge the Git examples with your existing settings. Preserve account-specific
+credential helpers, directory-based identity includes, and signing setup in local
+configuration. The shared example includes `~/.gitconfig.local` and requires an
+explicit identity through `user.useConfigOnly`.
+
+Merge `git/ignore` into `~/.config/git/ignore`. Merge the VS Code settings into your
+user settings rather than replacing unrelated preferences. The Code Runner
+extension is optional; its C++ override uses GCC 15 and quotes paths. Python uses
+`python3`. Other languages use the extension's defaults.
+
+The npm file is an example, not an authentication backup. Replace `@your-scope`
+with the package scope you use and supply `GITHUB_PACKAGES_TOKEN` through a secure
+local mechanism when using the environment-variable example. Never commit a real
+token or a shell file exporting its literal value.
+
+## Repository boundaries
+
+Only explicitly reviewed files are allowed by `.gitignore`. Credentials, account
+stores, SSH keys, signing material, histories, caches, generated state, and actual
+local override files are excluded. Review each new file before adding it. A
+private repository also needs these exclusions.
+
+## References
+
+- [Zsh startup order](https://zsh.sourceforge.io/Doc/Release/Files.html)
+- [fnm setup](https://github.com/Schniz/fnm#shell-setup)
+- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)

@@ -1,0 +1,3 @@
+# Example for GitHub Packages; configure the actual package scope locally.
+@your-scope:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGES_TOKEN}

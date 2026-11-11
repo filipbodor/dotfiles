@@ -1,0 +1,6 @@
+# Example only. Keep the real ~/.gitconfig.local outside this repository.
+[user]
+    name = Your Name
+    email = your-verified-email@example.com
+# Preserve your existing directory-specific identities, signing configuration,
+# and credential helpers here before adopting the shared Git configuration.

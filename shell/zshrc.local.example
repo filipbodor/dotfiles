@@ -1,0 +1,12 @@
+# Copy to ~/.zshrc.local and adjust to your machine. Do not put secrets here.
+# Optional Android SDK:
+# if [[ -d "$HOME/Library/Android/sdk" ]]; then
+#     export ANDROID_HOME="$HOME/Library/Android/sdk"
+#     path+=("$ANDROID_HOME/emulator" "$ANDROID_HOME/platform-tools")
+# fi
+# Optional Java 17 (macOS):
+# if [[ -x /usr/libexec/java_home ]]; then
+#     java_home=$(/usr/libexec/java_home -v 17 2>/dev/null) && export JAVA_HOME="$java_home"
+# fi
+# Optional .NET tools:
+# [[ ! -d "$HOME/.dotnet/tools" ]] || path+=("$HOME/.dotnet/tools")
