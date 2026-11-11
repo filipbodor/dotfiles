@@ -8,6 +8,7 @@ repository.
 
 | File | Purpose |
 | --- | --- |
+| `Brewfile` | Shared command-line dependencies |
 | `shell/.zprofile` | Guarded Homebrew setup and local command PATH |
 | `shell/.zshrc` | Oh My Zsh, fnm, editor defaults, and `runc` |
 | `shell/.profile` | Optional POSIX environment helper |
@@ -24,7 +25,22 @@ Review the files and back up the current configuration before copying anything.
 There is no automatic installer. These are macOS-oriented preferences; optional
 tools are loaded only when available.
 
-1. Install Homebrew and Oh My Zsh if you want to use them. The shell remains usable
+1. Install [Homebrew](https://brew.sh), then install the shared CLI dependencies:
+
+   ```sh
+   brew bundle install --file=Brewfile --no-upgrade
+   brew bundle check --file=Brewfile --no-upgrade
+   ```
+
+   The manifest uses `gcc@15` so `g++-15` remains available even when the unversioned
+   GCC formula moves to another major release. It records dependencies, rather
+   than locking every package version. Existing GCC 15 installations are reused; the versioned formula is installed
+   only when `g++-15` is missing from the standard Homebrew locations. Existing
+   Python 3 is reused too. The check verifies availability without requiring
+   unrelated package upgrades.
+   Oh My Zsh and the optional autosuggestions plugin are installed separately.
+
+   Install Oh My Zsh if you want to use it. The shell remains usable
    without Oh My Zsh. The configured theme is `bureau`.
 2. Install fnm and the Node versions your projects require. Initialize fnm with
    `fnm env --use-on-cd --shell zsh` as this configuration does. Use `fnm default
@@ -90,3 +106,5 @@ private repository also needs these exclusions.
 - [Zsh startup order](https://zsh.sourceforge.io/Doc/Release/Files.html)
 - [fnm setup](https://github.com/Schniz/fnm#shell-setup)
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+
+- [Homebrew Bundle](https://docs.brew.sh/Brew-Bundle-and-Brewfile)
