@@ -22,8 +22,8 @@ repository.
 ## Shell setup
 
 Review the files and back up the current configuration before copying anything.
-There is no automatic installer. These are macOS-oriented preferences; optional
-tools are loaded only when available.
+These are macOS-oriented preferences; optional tools are loaded only when
+available. The restore command below previews every replacement first.
 
 1. Install [Homebrew](https://brew.sh), then install the shared CLI dependencies:
 
@@ -53,8 +53,8 @@ tools are loaded only when available.
      "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
    ```
 
-4. Copy or merge `shell/.zprofile`, `shell/.zshrc`, and `shell/.profile` into the
-   corresponding files in your home directory.
+4. Preview and install the shell files using the restore command below, or merge
+   them manually into your home directory.
 5. Copy `shell/zshrc.local.example` to `~/.zshrc.local` if you need SDK settings.
    The shell also supports `~/.zprofile.local` and `~/.profile.local`.
 
@@ -84,6 +84,30 @@ An explicit input file takes priority over `in.txt`. Without an explicit input,
 `in.txt` in the current directory is used when present; otherwise the program reads
 from the terminal. Missing explicit input files fail before compilation. Install GCC 15 or change the
 compiler in the function to match your setup. Compiler failures stop execution.
+
+## Restore shared preferences
+
+Run from the repository:
+
+```sh
+python3 scripts/restore.py                    # Show diffs; change nothing
+python3 scripts/restore.py --apply            # Show diffs, then ask before applying
+python3 scripts/restore.py --vscode --apply   # Also merge VS Code preferences
+```
+
+The default restores only `.zprofile`, `.zshrc`, and `.profile`. Local overrides,
+Git identities and account routing, npm credentials, and SDK settings stay in
+place. Existing files are copied into a private, timestamped directory under
+`~/.local/state/dotfiles-backups/` before any replacement. File permissions are
+preserved. Newly created files are recorded in `manifest.json` in that backup.
+To undo a restore, copy the originals from that directory to the same relative
+paths under your home; remove newly created files listed as `existed: false`.
+
+The command refuses to replace symlinks. VS Code merging preserves unrelated
+preferences and unrelated entries inside setting objects. If your settings use
+comments or trailing commas (JSONC), merge them manually; the command stops before
+writing anything. Review diffs locally because existing settings can contain
+private values. `--home PATH` can target a disposable directory for testing.
 
 ## Git, editor, and npm
 
@@ -116,3 +140,12 @@ private repository also needs these exclusions.
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 
 - [Homebrew Bundle](https://docs.brew.sh/Brew-Bundle-and-Brewfile)
+
+## Checks
+
+```sh
+python3 -m unittest discover -s tests -v
+```
+
+Restore tests use temporary homes. C++ tests compile real programs and require
+Zsh and `g++-15`; they are skipped when these tools are unavailable.
