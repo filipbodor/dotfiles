@@ -141,6 +141,24 @@ private repository also needs these exclusions.
 
 - [Homebrew Bundle](https://docs.brew.sh/Brew-Bundle-and-Brewfile)
 
+## Measure shell startup
+
+```sh
+python3 scripts/benchmark-shell.py
+python3 scripts/benchmark-shell.py --runs 10
+```
+
+This compares the installed interactive login configuration with a minimal Zsh
+baseline, using one warm-up and repeated timed runs. It measures from your home
+directory with inherited Node-manager paths removed. Local overrides are included;
+no timing results or machine details are written to this repository. Startup hooks
+run normally, so they may refresh their own caches. The minimal shell still reads
+Zsh's unavoidable system `zshenv` file.
+
+Measure before adding plugins and compare the medians on the same machine.
+Timing does not cover prompt redraw or terminal rendering. Keep themes and plugins
+that you use rather than changing them solely for appearance.
+
 ## Checks
 
 ```sh

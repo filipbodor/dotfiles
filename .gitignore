@@ -21,3 +21,4 @@
 !/scripts/
 !/scripts/restore.py
 !/tests/test_restore.py
+!/scripts/benchmark-shell.py
