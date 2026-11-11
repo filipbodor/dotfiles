@@ -67,6 +67,18 @@ global default. If fnm reports a missing version, review the version file and ru
 completions; the explicit `fnm env` call supplies version switching.
 `EDITOR` and `VISUAL` use `code --wait` when available, otherwise `vi`.
 
+### Directory jumping with Pogo
+
+The shell optionally enables [Pogo](https://github.com/filipbodor/pogo) when its
+binary is installed and on PATH. Follow Pogo's installation instructions, then
+open a new terminal. Use `j project` to jump to a learned directory, `j -` to go
+back, or `j` to go home. Existing directories can be opened directly with
+`j /path/to/project` and are learned as you visit them.
+
+Pogo's history and any seeded favorites are private local data. They stay outside
+this repository. Hop continues to open editor projects; Pogo changes the current
+terminal directory.
+
 ### Running C++
 
 `runc` lives in `.zshrc` and compiles with `g++-15 -std=c++17`:

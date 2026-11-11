@@ -65,3 +65,8 @@ runc() {
 
 # Identities, optional SDK paths, and private aliases belong here.
 [[ ! -r "$HOME/.zshrc.local" ]] || source "$HOME/.zshrc.local"
+
+# Optional Pogo directory jumping; visit history stays on this machine.
+if (( $+commands[pogo] )); then
+    eval "$(pogo init zsh)"
+fi
