@@ -43,7 +43,7 @@ tools are loaded only when available.
    Install Oh My Zsh if you want to use it. The shell remains usable
    without Oh My Zsh. The configured theme is `bureau`.
 2. Install fnm and the Node versions your projects require. Initialize fnm with
-   `fnm env --use-on-cd --shell zsh` as this configuration does. Use `fnm default
+   `fnm env --use-on-cd --version-file-strategy recursive --shell zsh` as this configuration does. Use `fnm default
    VERSION` to choose a fallback version. Avoid loading nvm alongside fnm; keep its
    installation until any required global tools have been migrated.
 3. Optionally install autosuggestions in Oh My Zsh's custom plugin directory:
@@ -59,7 +59,11 @@ tools are loaded only when available.
    The shell also supports `~/.zprofile.local` and `~/.profile.local`.
 
 `~/.local/bin` stays ahead of system tools so local command wrappers take precedence.
-The shell uses fnm for project version files. Oh My Zsh's fnm plugin supplies
+The shell uses fnm for project version files and searches parent directories, so
+entering `src/` keeps the project root's version. Respect each repository's existing
+`.nvmrc` or `.node-version`; do not overwrite work project requirements with the
+global default. If fnm reports a missing version, review the version file and run
+`fnm install` from that project. No project files are changed by this setup. Oh My Zsh's fnm plugin supplies
 completions; the explicit `fnm env` call supplies version switching.
 `EDITOR` and `VISUAL` use `code --wait` when available, otherwise `vi`.
 
@@ -71,10 +75,14 @@ completions; the explicit `fnm env` call supplies version switching.
 runc solution
 runc solution.cpp
 runc "solution with spaces"
+runc solution sample.txt
+: > empty.txt
+runc solution empty.txt   # Empty input, even if in.txt exists
 ```
 
-If the current directory contains `in.txt`, it is used as standard input;
-otherwise the program reads from the terminal. Install GCC 15 or change the
+An explicit input file takes priority over `in.txt`. Without an explicit input,
+`in.txt` in the current directory is used when present; otherwise the program reads
+from the terminal. Missing explicit input files fail before compilation. Install GCC 15 or change the
 compiler in the function to match your setup. Compiler failures stop execution.
 
 ## Git, editor, and npm

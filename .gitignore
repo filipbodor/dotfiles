@@ -16,3 +16,5 @@
 !/npm/
 !/npm/npmrc.example
 !/Brewfile
+!/tests/
+!/tests/test_shell.py
