@@ -79,6 +79,23 @@ Pogo's history and any seeded favorites are private local data. They stay outsid
 this repository. Hop continues to open editor projects; Pogo changes the current
 terminal directory.
 
+### Worktree sessions with Hop
+
+With a Hop build supporting `hop init zsh` installed, the shell also defines `hwt`:
+
+```sh
+hwt                  # Pick a worktree; open editor + Sublime Merge and cd
+hwt project review   # Filter by repository, branch, or path
+hwt --list           # List only, without opening apps or changing directory
+hwt --path-only      # Pick and cd without opening apps
+```
+
+The integration is optional and tolerates older Hop binaries. Hop discovers Git
+worktrees from registered folders and saved workspace folders. Run your usual
+server command after the terminal switches; dependency installation and server
+ports are handled per worktree. See [Hop's worktree guide](https://github.com/filipbodor/hop#worktree-sessions).
+Worktree paths and private project registrations stay outside this repository.
+
 ### Running C++
 
 `runc` lives in `.zshrc` and compiles with `g++-15 -std=c++17`:

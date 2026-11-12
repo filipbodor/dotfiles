@@ -70,3 +70,8 @@ runc() {
 if (( $+commands[pogo] )); then
     eval "$(pogo init zsh)"
 fi
+
+# Optional Hop worktree sessions; older Hop builds simply omit this helper.
+if (( $+commands[hop] )); then
+    eval "$(hop init zsh 2>/dev/null)"
+fi
